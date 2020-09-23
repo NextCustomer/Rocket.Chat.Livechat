@@ -1,11 +1,12 @@
-import { h, Component } from 'preact';
+import { Component } from 'preact';
 
 import { Button } from '../../components/Button';
 import { ButtonGroup } from '../../components/ButtonGroup';
-import { Form, FormField, SelectInput, TextInput, Validations } from '../../components/Form';
+import { Form, FormField, TextInput, Validations } from '../../components/Form';
 import Screen from '../../components/Screen';
-import { createClassName, sortArrayByColumn } from '../../components/helpers';
+import { createClassName } from '../../components/helpers';
 import I18n from '../../i18n';
+import store from '../../store';
 import styles from './styles.scss';
 
 
@@ -15,9 +16,6 @@ const defaultUnavailableMessage = ''; // TODO
 
 export default class LeaveMessage extends Component {
 	validations = {
-		name: [Validations.nonEmpty],
-		email: [Validations.nonEmpty, Validations.email],
-		department: [],
 		message: [Validations.nonEmpty],
 	}
 
@@ -76,7 +74,11 @@ export default class LeaveMessage extends Component {
 				.map(([name, { value }]) => ({ [name]: value }))
 				.reduce((values, entry) => ({ ...values, ...entry }), {});
 
-			if (await this.props.onSubmit(values)) {
+			const {
+				token, department,
+			} = store.state;
+
+			if (await this.props.onSubmit({ token, department, message: values.message })) {
 				this.reset();
 			}
 		}
@@ -93,60 +95,60 @@ export default class LeaveMessage extends Component {
 
 	renderForm = ({ loading, departments, valid = this.isValid() }, { name, email, department, message }) => (
 		<Form onSubmit={this.handleSubmit}>
-			{name
-				? (
-					<FormField
-						required
-						label={I18n.t('Name')}
-						error={name.showError && name.error}
-					>
-						<TextInput
-							name='name'
-							value={name.value}
-							placeholder={I18n.t('Insert your %{field} here...', { field: I18n.t('Name') })}
-							disabled={loading}
-							onInput={this.handleNameChange}
-						/>
-					</FormField>
-				)
-				: null}
+			{/*{name*/}
+			{/*	? (*/}
+			{/*		<FormField*/}
+			{/*			required*/}
+			{/*			label={I18n.t('Name')}*/}
+			{/*			error={name.showError && name.error}*/}
+			{/*		>*/}
+			{/*			<TextInput*/}
+			{/*				name='name'*/}
+			{/*				value={name.value}*/}
+			{/*				placeholder={I18n.t('Insert your %{field} here...', { field: I18n.t('Name') })}*/}
+			{/*				disabled={loading}*/}
+			{/*				onInput={this.handleNameChange}*/}
+			{/*			/>*/}
+			{/*		</FormField>*/}
+			{/*	)*/}
+			{/*	: null}*/}
 
-			{email
-				? (
-					<FormField
-						required
-						label={I18n.t('Email')}
-						error={email.showError && email.error}
-					>
-						<TextInput
-							name='email'
-							value={email.value}
-							placeholder={I18n.t('Insert your %{field} here...', { field: I18n.t('Email') })}
-							disabled={loading}
-							onInput={this.handleEmailChange}
-						/>
-					</FormField>
-				)
-				: null}
+			{/*{email*/}
+			{/*	? (*/}
+			{/*		<FormField*/}
+			{/*			required*/}
+			{/*			label={I18n.t('Email')}*/}
+			{/*			error={email.showError && email.error}*/}
+			{/*		>*/}
+			{/*			<TextInput*/}
+			{/*				name='email'*/}
+			{/*				value={email.value}*/}
+			{/*				placeholder={I18n.t('Insert your %{field} here...', { field: I18n.t('Email') })}*/}
+			{/*				disabled={loading}*/}
+			{/*				onInput={this.handleEmailChange}*/}
+			{/*			/>*/}
+			{/*		</FormField>*/}
+			{/*	)*/}
+			{/*	: null}*/}
 
-			{department
-				? (
-					<FormField
-						label={I18n.t('I need help with...')}
-						error={department.showError && department.error}
-					>
-						<SelectInput
-							name='department'
-							value={department.value}
-							options={sortArrayByColumn(departments, 'name').map(({ _id, name }) => ({ value: _id, label: name }))}
-							placeholder={I18n.t('Choose an option...')}
-							disabled={loading}
-							error={department.showError}
-							onInput={this.handleDepartmentChange}
-						/>
-					</FormField>
-				)
-				: null}
+			{/*{department*/}
+			{/*	? (*/}
+			{/*		<FormField*/}
+			{/*			label={I18n.t('I need help with...')}*/}
+			{/*			error={department.showError && department.error}*/}
+			{/*		>*/}
+			{/*			<SelectInput*/}
+			{/*				name='department'*/}
+			{/*				value={department.value}*/}
+			{/*				options={sortArrayByColumn(departments, 'name').map(({ _id, name }) => ({ value: _id, label: name }))}*/}
+			{/*				placeholder={I18n.t('Choose an option...')}*/}
+			{/*				disabled={loading}*/}
+			{/*				error={department.showError}*/}
+			{/*				onInput={this.handleDepartmentChange}*/}
+			{/*			/>*/}
+			{/*		</FormField>*/}
+			{/*	)*/}
+			{/*	: null}*/}
 
 			{message
 				? (
