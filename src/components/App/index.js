@@ -61,17 +61,17 @@ export class App extends Component {
 				return route('/leave-message');
 			}
 
-			const showDepartment = departments.filter((dept) => dept.showOnRegistration).length > 0;
+			// const showDepartment = departments.filter((dept) => dept.showOnRegistration).length > 0;
 
-			const showRegistrationForm = (
-				registrationForm
-					&& (nameFieldRegistrationForm || emailFieldRegistrationForm || showDepartment)
-			)
-				&& !triggered
-				&& !(user && user.token);
-			if (showRegistrationForm) {
-				return route('/register');
-			}
+			// const showRegistrationForm = (
+			// 	registrationForm
+			// 		&& (nameFieldRegistrationForm || emailFieldRegistrationForm || showDepartment)
+			// )
+			// 	&& !triggered
+			// 	&& !(user && user.token);
+			// if (showRegistrationForm) {
+			// 	return route('/register');
+			// }
 		}, 100);
 	}
 
@@ -155,6 +155,8 @@ export class App extends Component {
 	}
 
 	async initialize() {
+		store.setState({ token: queryString.parse(window.location.search).token, department: queryString.parse(window.location.search).department});
+
 		// TODO: split these behaviors into composable components
 		await Connection.init();
 		this.handleTriggers();
