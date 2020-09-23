@@ -6,6 +6,7 @@ const createToken = () => Math.random().toString(36).substring(2, 15) + Math.ran
 
 const initialState = {
 	token: createToken(),
+	department: null,
 	typing: [],
 	config: {
 		messages: {},
