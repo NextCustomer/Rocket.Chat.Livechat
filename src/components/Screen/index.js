@@ -140,7 +140,7 @@ export const ScreenFooter = ({ children, options, limit }) => (
 		<FooterContent>
 			{options}
 			{limit}
-			<PoweredBy />
+			{/* <PoweredBy /> */}
 		</FooterContent>
 	</Footer>
 );
