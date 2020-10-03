@@ -393,12 +393,14 @@ if (typeof window.RocketChat.url !== 'undefined') {
 	init(window.RocketChat.url);
 }
 
-const queue = window.RocketChat._;
+const queue = window.RocketChat._ || [];
 
-window.RocketChat._.push = function(c) {
-	c.call(window.RocketChat.livechat);
-};
-window.RocketChat = window.RocketChat._.push;
+if (window.RocketChat._) {
+	window.RocketChat._.push = function(c) {
+		c.call(window.RocketChat.livechat);
+	};
+	window.RocketChat = window.RocketChat._.push;
+}
 
 // exports
 window.RocketChat.livechat = {
