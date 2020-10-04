@@ -85,17 +85,17 @@ class ScreenHeader extends Component {
 			</Header.Content>
 			<Tooltip.Container>
 				<Header.Actions>
-					<Tooltip.Trigger content={notificationsEnabled ? I18n.t('Sound is on') : I18n.t('Sound is off')}>
-						<Header.Action
-							aria-label={notificationsEnabled ? I18n.t('Disable notifications') : I18n.t('Enable notifications')}
-							onClick={notificationsEnabled ? onDisableNotifications : onEnableNotifications}
-						>
-							{notificationsEnabled
-								? <NotificationsEnabledIcon width={20} height={20} />
-								: <NotificationsDisabledIcon width={20} height={20} />
-							}
-						</Header.Action>
-					</Tooltip.Trigger>
+					{/*<Tooltip.Trigger content={notificationsEnabled ? I18n.t('Sound is on') : I18n.t('Sound is off')}>*/}
+					{/*	<Header.Action*/}
+					{/*		aria-label={notificationsEnabled ? I18n.t('Disable notifications') : I18n.t('Enable notifications')}*/}
+					{/*		onClick={notificationsEnabled ? onDisableNotifications : onEnableNotifications}*/}
+					{/*	>*/}
+					{/*		{notificationsEnabled*/}
+					{/*			? <NotificationsEnabledIcon width={20} height={20} />*/}
+					{/*			: <NotificationsDisabledIcon width={20} height={20} />*/}
+					{/*		}*/}
+					{/*	</Header.Action>*/}
+					{/*</Tooltip.Trigger>*/}
 					{(expanded || !windowed) && (
 						<Tooltip.Trigger content={minimized ? I18n.t('Restore chat') : I18n.t('Minimize chat')}>
 							<Header.Action
@@ -109,13 +109,13 @@ class ScreenHeader extends Component {
 							</Header.Action>
 						</Tooltip.Trigger>
 					)}
-					{/* {(!expanded && !windowed) && (
-						<Tooltip.Trigger content={I18n.t('Expand chat')} placement='bottom-left'>
-							<Header.Action aria-label={I18n.t('Expand chat')} onClick={onOpenWindow}>
-								<OpenWindowIcon width={20} height={20} />
-							</Header.Action>
-						</Tooltip.Trigger>
-					)} */}
+					{/*{(!expanded && !windowed) && (*/}
+					{/*	<Tooltip.Trigger content={I18n.t('Expand chat')} placement='bottom-left'>*/}
+					{/*		<Header.Action aria-label={I18n.t('Expand chat')} onClick={onOpenWindow}>*/}
+					{/*			<OpenWindowIcon width={20} height={20} />*/}
+					{/*		</Header.Action>*/}
+					{/*	</Tooltip.Trigger>*/}
+					{/*)}*/}
 				</Header.Actions>
 			</Tooltip.Container>
 		</Header>
