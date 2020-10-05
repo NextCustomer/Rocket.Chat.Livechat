@@ -22,6 +22,7 @@ let ready = false;
 let smallScreen = false;
 let bodyStyle;
 let scrollPosition;
+let intervals = [];
 
 export const validCallbacks = [
 	'chat-maximized',
@@ -346,20 +347,22 @@ const currentPage = {
 	title: null,
 };
 
-const attachMessageListener = () => {
-	window.addEventListener('message', (msg) => {
-		if (typeof msg.data === 'object' && msg.data.src !== undefined && msg.data.src === 'rocketchat') {
-			if (api[msg.data.fn] !== undefined && typeof api[msg.data.fn] === 'function') {
-				const args = [].concat(msg.data.args || []);
-				log(`api.${ msg.data.fn }`, ...args);
-				api[msg.data.fn].apply(null, args);
-			}
+const _messageListener = (msg) => {
+	if (typeof msg.data === 'object' && msg.data.src !== undefined && msg.data.src === 'rocketchat') {
+		if (api[msg.data.fn] !== undefined && typeof api[msg.data.fn] === 'function') {
+			const args = [].concat(msg.data.args || []);
+			log(`api.${ msg.data.fn }`, ...args);
+			api[msg.data.fn].apply(null, args);
 		}
-	}, false);
+	}
+}
+
+const attachMessageListener = () => {
+	window.addEventListener('message', _messageListener, false);
 };
 
 const trackNavigation = () => {
-	setInterval(() => {
+	const id = setInterval(() => {
 		if (document.location.href !== currentPage.href) {
 			pageVisited('url');
 			currentPage.href = document.location.href;
@@ -370,6 +373,7 @@ const trackNavigation = () => {
 			currentPage.title = document.title;
 		}
 	}, 800);
+	intervals.push(id);
 };
 
 const init = (url) => {
@@ -402,12 +406,21 @@ if (window.RocketChat._) {
 	window.RocketChat = window.RocketChat._.push;
 }
 
+const destroy = () => {
+	iframe && document.body.removeChild(iframe);
+	widget && document.body.removeChild(widget);
+	hookQueue = [];
+	intervals.forEach(id => clearInterval(id));
+	window.removeEventListener('message', _messageListener);
+};
+
 // exports
 window.RocketChat.livechat = {
 	// methods
 	pageVisited,
 	setCustomField,
 	initialize,
+	destroy,
 	setTheme,
 	setDepartment,
 	clearDepartment,
