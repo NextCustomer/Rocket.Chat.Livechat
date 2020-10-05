@@ -407,10 +407,15 @@ if (window.RocketChat._) {
 }
 
 const destroy = () => {
-	iframe && document.body.removeChild(iframe);
-	widget && document.body.removeChild(widget);
+	if (widget) {
+		Array.prototype.slice.call(widget.children).forEach((child) => {
+			widget.removeChild(child);
+		});
+		document.body.removeChild(widget);
+	}
 	hookQueue = [];
 	intervals.forEach(id => clearInterval(id));
+	intervals = [];
 	window.removeEventListener('message', _messageListener);
 };
 
