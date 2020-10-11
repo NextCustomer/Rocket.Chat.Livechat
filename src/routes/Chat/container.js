@@ -10,7 +10,7 @@ import constants from '../../lib/constants';
 import { loadConfig } from '../../lib/main';
 import { parentCall, runCallbackEventEmitter } from '../../lib/parentCall';
 import { initRoom, closeChat, loadMessages, loadMoreMessages, defaultRoomParams, getGreetingMessages } from '../../lib/room';
-import { Consumer } from '../../store';
+import { Consumer, store } from '../../store';
 import Chat from './component';
 
 export class ChatContainer extends Component {
@@ -55,7 +55,11 @@ export class ChatContainer extends Component {
 			return user;
 		}
 
-		const visitor = { token, ...guest };
+		const {
+			department,
+		} = store.state;
+
+		const visitor = { token, department, ...guest };
 		const newUser = await Livechat.grantVisitor({ visitor });
 		await dispatch({ user: newUser });
 	}
