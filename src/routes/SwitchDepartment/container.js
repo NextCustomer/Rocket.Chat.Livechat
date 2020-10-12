@@ -12,7 +12,7 @@ import SwitchDepartment from './component';
 export class SwitchDepartmentContainer extends Component {
 	confirmChangeDepartment = async () => {
 		const result = await ModalManager.confirm({
-			text: I18n.t('Are you sure you want to switch the department?'),
+			text: I18n.t('Are you sure you want to switch the sponsor?'),
 		});
 
 		return typeof result.success === 'boolean' && result.success;
@@ -39,20 +39,20 @@ export class SwitchDepartmentContainer extends Component {
 			const result = await Livechat.transferChat({ rid, department });
 			const { success } = result;
 			if (!success) {
-				throw I18n.t('No available agents to transfer');
+				throw I18n.t('No available sponsor representative to transfer');
 			}
 
 			await dispatch({ department, loading: false });
 			await loadConfig();
 
 			await ModalManager.alert({
-				text: I18n.t('Department switched'),
+				text: I18n.t('Sponsor switched'),
 			});
 
 			history.go(-1);
 		} catch (error) {
 			console.error(error);
-			await dispatch({ alerts: (alerts.push({ id: createToken(), children: I18n.t('No available agents to transfer'), warning: true }), alerts) });
+			await dispatch({ alerts: (alerts.push({ id: createToken(), children: I18n.t('No available sponsor representative to transfer'), warning: true }), alerts) });
 		} finally {
 			await dispatch({ loading: false });
 		}

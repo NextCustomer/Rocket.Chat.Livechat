@@ -9,8 +9,8 @@ import I18n from '../../i18n';
 import styles from './styles.scss';
 
 
-const defaultTitle = I18n.t('Change Department');
-const defaultMessage = I18n.t('Choose a department');
+const defaultTitle = I18n.t('Change Sponsor');
+const defaultMessage = I18n.t('Choose a sponsor');
 
 export default class SwitchDepartment extends Component {
 	static getDerivedStateFromProps(props, state) {
@@ -99,14 +99,14 @@ export default class SwitchDepartment extends Component {
 
 					<Form onSubmit={this.handleSubmit}>
 						<FormField
-							label={I18n.t('Departments')}
+							label={I18n.t('Sponsors')}
 							error={department && department.showError && department.error}
 						>
 							<SelectInput
 								name='department'
 								value={department && department.value}
 								options={departments.map(({ _id, name }) => ({ value: _id, label: name }))}
-								placeholder={I18n.t('Choose a department...')}
+								placeholder={I18n.t('Choose a sponsor...')}
 								disabled={loading}
 								error={department && department.showError}
 								onInput={this.handleDepartmentChange}

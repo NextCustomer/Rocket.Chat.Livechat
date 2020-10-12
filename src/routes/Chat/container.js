@@ -253,7 +253,7 @@ export class ChatContainer extends Component {
 		if (connecting) {
 			alerts.push({
 				id: connectingAgentAlertId,
-				children: message || I18n.t('Please, wait for the next available agent..'),
+				children: message || I18n.t('Please, wait for the next available representative ..'),
 				warning: true,
 				hideCloseButton: true,
 				timeout: 0,

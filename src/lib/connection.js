@@ -65,13 +65,13 @@ const Connection = {
 
 	async handleConnected() {
 		await self.clearAlerts();
-		await self.displayAlert({ id: livechatConnectedAlertId, children: I18n.t('Livechat connected.'), success: true });
+		await self.displayAlert({ id: livechatConnectedAlertId, children: I18n.t('Sponsor chat connected.'), success: true });
 		await loadMessages();
 	},
 
 	async handleDisconnected() {
 		await self.clearAlerts();
-		await self.displayAlert({ id: livechatDisconnectedAlertId, children: I18n.t('Livechat is not connected.'), error: true, timeout: 0 });
+		await self.displayAlert({ id: livechatDisconnectedAlertId, children: I18n.t('Sponsor chat is not connected.'), error: true, timeout: 0 });
 		self.reconnect();
 	},
 
