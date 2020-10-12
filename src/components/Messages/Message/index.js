@@ -1,10 +1,12 @@
 import { h } from 'preact';
 
 import I18n from '../../../i18n';
+import { store } from '../../../store';
 import { getAttachmentUrl, memo, createClassName } from '../../helpers';
 import { AudioAttachment } from '../AudioAttachment';
 import { FileAttachment } from '../FileAttachment';
 import { ImageAttachment } from '../ImageAttachment';
+import { JitsiAttachment } from '../JitsiAttachment';
 import { MessageAvatars } from '../MessageAvatars';
 import MessageBlocks from '../MessageBlocks';
 import { MessageBubble } from '../MessageBubble';
@@ -58,6 +60,12 @@ const renderContent = ({
 					url={attachmentResolver(attachment.title_link)}
 					title={attachment.title}
 				/>)
+			|| (attachment.jitsi_link
+				&& <JitsiAttachment
+					quoted={quoted}
+					url={attachmentResolver(attachment.jitsi_link)}
+					title={attachment.title}
+				/>)
 			|| ((attachment.message_link || attachment.tmid) && renderContent({
 				text: attachment.text,
 				quoted: true,
@@ -87,6 +95,19 @@ const getSystemMessageText = ({ t, conversationFinishedMessage }) =>
 	|| (t === MESSAGE_TYPE_USER_LEFT && I18n.t('User left'))
 	|| (t === MESSAGE_TYPE_WELCOME && I18n.t('Welcome'))
 	|| (t === MESSAGE_TYPE_LIVECHAT_CLOSED && (conversationFinishedMessage || I18n.t('Conversation finished')));
+
+const jitsiAttachmentBody = (message) => {
+	if (message.t === 'jitsi_call_started') {
+		const {
+			token,
+		} = store.state;
+
+		return [{
+			jitsi_link: `/api/v1/livechat/video.call/${ token }/url?rid=${ message.rid }`,
+			title: 'Click to Join!',
+		}];
+	}
+};
 
 const getMessageUsernames = (compact, message) => {
 	if (compact || !message.u) {
@@ -129,7 +150,7 @@ export const Message = memo(({
 				text: message.t ? getSystemMessageText(message) : message.msg,
 				system: !!message.t,
 				me,
-				attachments: message.attachments,
+				attachments: message.attachments || jitsiAttachmentBody(message),
 				blocks: message.blocks,
 				mid: message._id,
 				rid: message.rid,
