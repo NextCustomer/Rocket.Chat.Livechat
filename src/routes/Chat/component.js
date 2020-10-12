@@ -167,12 +167,12 @@ export default class Chat extends Component {
 					options={options ? (
 						<FooterOptions>
 							<Menu.Group>
-								{onChangeDepartment && (
-									<Menu.Item onClick={onChangeDepartment} icon={ChangeIcon}>{I18n.t('Change department')}</Menu.Item>
-								)}
-								{onRemoveUserData && (
-									<Menu.Item onClick={onRemoveUserData} icon={RemoveIcon}>{I18n.t('Forget/Remove my data')}</Menu.Item>
-								)}
+								{/*{onChangeDepartment && (*/}
+								{/*	<Menu.Item onClick={onChangeDepartment} icon={ChangeIcon}>{I18n.t('Change department')}</Menu.Item>*/}
+								{/*)}*/}
+								{/*{onRemoveUserData && (*/}
+								{/*	<Menu.Item onClick={onRemoveUserData} icon={RemoveIcon}>{I18n.t('Forget/Remove my data')}</Menu.Item>*/}
+								{/*)}*/}
 								{onFinishChat && (
 									<Menu.Item danger onClick={onFinishChat} icon={FinishIcon}>{I18n.t('Finish this chat')}</Menu.Item>
 								)}
@@ -190,15 +190,15 @@ export default class Chat extends Component {
 						onChange={this.handleChangeText}
 						placeholder={I18n.t('Type your message here')}
 						value={text}
-						notifyEmojiSelect={(click) => { this.notifyEmojiSelect = click; }}
-						handleEmojiClick={this.handleEmojiClick}
-						pre={(
-							<ComposerActions>
-								<ComposerAction onClick={this.toggleEmojiPickerState}>
-									<EmojiIcon width={20} height={20} />
-								</ComposerAction>
-							</ComposerActions>
-						)}
+						// notifyEmojiSelect={(click) => { this.notifyEmojiSelect = click; }}
+						// handleEmojiClick={this.handleEmojiClick}
+						// pre={(
+						// 	<ComposerActions>
+						// 		<ComposerAction onClick={this.toggleEmojiPickerState}>
+						// 			<EmojiIcon width={20} height={20} />
+						// 		</ComposerAction>
+						// 	</ComposerActions>
+						// )}
 						post={(
 							<ComposerActions>
 								{text.length === 0 && uploads && (
